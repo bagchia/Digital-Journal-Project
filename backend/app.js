@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
-port = 15204
+port = 15224
 
 
 app.set('port', port);
@@ -37,6 +37,20 @@ app.post('/authenticate', function (req, res, next) {
         else{
             data = rows[0]
             res.send(data)
+        }
+    });
+});
+
+
+app.get('/get_templates', function (req, res, next) {
+    console.log(req.body)
+    mysql.pool.query("SELECT * FROM `Templates`", [], function (err, rows, result) {
+        if (err) {
+            res.status(500).send(err)
+            return;
+        }
+        else{
+            res.send(rows)
         }
     });
 });
